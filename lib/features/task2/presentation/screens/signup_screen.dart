@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../bloc/auth_bloc.dart';
-import '../widgets/login_form.dart';
+import '../widgets/signup_form.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,21 +13,21 @@ class LoginScreen extends StatelessWidget {
       create: (_) => AuthBloc(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: const Text('Create Account'),
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 60),
+            padding: const EdgeInsets.only(top: 40),
             child: Column(
               children: [
                 Icon(
-                  Icons.lock_outline,
+                  Icons.person_add_outlined,
                   size: 80,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Welcome Back',
+                  'Get Started',
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -35,14 +35,14 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Sign in to continue',
+                  'Create your account to continue',
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     color: Colors.grey,
                   ),
                 ),
-                const SizedBox(height: 48),
-                const LoginForm(),
+                const SizedBox(height: 40),
+                const SignupForm(),
               ],
             ),
           ),
