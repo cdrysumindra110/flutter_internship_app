@@ -20,9 +20,17 @@ class TaskStats extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _StatItem(label: 'Completed', count: completed, color: Colors.green),
+            _StatItem(
+              label: 'Completed',
+              count: completed,
+              color: Colors.green,
+            ),
             _StatItem(label: 'Pending', count: pending, color: Colors.orange),
-            _StatItem(label: 'Total', count: tasks.length, color: AppTheme.primaryColor),
+            _StatItem(
+              label: 'Total',
+              count: tasks.length,
+              color: AppTheme.primaryColor,
+            ),
           ],
         ),
       ),
@@ -55,7 +63,12 @@ class _StatItem extends StatelessWidget {
         ),
         Text(
           label,
-          style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey),
+          style: GoogleFonts.poppins(
+            fontSize: 12,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey.shade400
+                : Colors.grey,
+          ),
         ),
       ],
     );

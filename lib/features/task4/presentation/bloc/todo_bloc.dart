@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart'; // add uuid package to pubspec: uuid: ^4.1.0
+import 'package:uuid/uuid.dart';
 import '../../domain/models/todo_task.dart';
 
 part 'todo_event.dart';
@@ -38,7 +38,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     final newTask = TodoTask(
       id: uuid.v4(),
       title: event.title,
+      description: event.description,
       category: event.category,
+      dueDate: event.dueDate,
     );
     final updatedTasks = [...state.tasks, newTask];
     emit(state.copyWith(tasks: updatedTasks));
@@ -51,6 +53,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         return task.copyWith(
           title: event.newTitle,
           category: event.newCategory,
+          description: event.newDescription,
+          dueDate: event.newDueDate,
         );
       }
       return task;
@@ -60,14 +64,17 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Future<void> _onDeleteTask(DeleteTask event, Emitter<TodoState> emit) async {
-    final updatedTasks =
-        state.tasks.where((task) => task.id != event.id).toList();
+    final updatedTasks = state.tasks
+        .where((task) => task.id != event.id)
+        .toList();
     emit(state.copyWith(tasks: updatedTasks));
     await _saveTasks(updatedTasks);
   }
 
   Future<void> _onToggleTaskCompletion(
-      ToggleTaskCompletion event, Emitter<TodoState> emit) async {
+    ToggleTaskCompletion event,
+    Emitter<TodoState> emit,
+  ) async {
     final updatedTasks = state.tasks.map((task) {
       if (task.id == event.id) {
         return task.copyWith(isCompleted: !task.isCompleted);

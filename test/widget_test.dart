@@ -8,12 +8,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_internship_app/features/task3/data/services/post_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter_internship_app/main.dart';
 
 void main() {
   testWidgets('App shows home screen title', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp(postService: PostService()));
+    // Setup
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    
+    await tester.pumpWidget(MyApp(
+      postService: PostService(),
+      prefs: prefs,
+    ));
 
     expect(find.text('Internship Tasks'), findsOneWidget);
     expect(find.byType(Scaffold), findsOneWidget);

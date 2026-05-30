@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_internship_app/features/task2/presentation/screens/signup_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme.dart';
 import '../../../../shared/widgets/loading_button.dart';
 import '../bloc/auth_bloc.dart';
@@ -28,15 +27,13 @@ class LoginForm extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-
               TextField(
                 decoration: InputDecoration(
                   labelText: "Email",
                   errorText: state.emailError,
                   prefixIcon: const Icon(Icons.email),
                 ),
-                onChanged: (v) =>
-                    context.read<AuthBloc>().add(EmailChanged(v)),
+                onChanged: (v) => context.read<AuthBloc>().add(EmailChanged(v)),
               ),
 
               const SizedBox(height: 16),
@@ -48,12 +45,14 @@ class LoginForm extends StatelessWidget {
                   errorText: state.passwordError,
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
-                    icon: Icon(state.obscurePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                    onPressed: () => context
-                        .read<AuthBloc>()
-                        .add(TogglePasswordVisibility()),
+                    icon: Icon(
+                      state.obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () => context.read<AuthBloc>().add(
+                      TogglePasswordVisibility(),
+                    ),
                   ),
                 ),
                 onChanged: (v) =>
@@ -65,8 +64,7 @@ class LoginForm extends StatelessWidget {
               LoadingButton(
                 label: "Login",
                 isLoading: state.status == AuthStatus.loading,
-                onPressed: () =>
-                    context.read<AuthBloc>().add(LoginSubmitted()),
+                onPressed: () => context.read<AuthBloc>().add(LoginSubmitted()),
               ),
 
               const SizedBox(height: 16),
@@ -78,9 +76,7 @@ class LoginForm extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) => const SignupScreen(),
-                      ),
+                      MaterialPageRoute(builder: (_) => const SignupScreen()),
                     ),
                     child: Text(
                       "Register",
@@ -89,9 +85,9 @@ class LoginForm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         );

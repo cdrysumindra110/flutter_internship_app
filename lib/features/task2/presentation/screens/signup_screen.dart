@@ -12,9 +12,7 @@ class SignupScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => AuthBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Create Account'),
-        ),
+        appBar: AppBar(title: const Text('Create Account')),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 40),
@@ -36,10 +34,7 @@ class SignupScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'Create your account to continue',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 40),
                 const SignupForm(),

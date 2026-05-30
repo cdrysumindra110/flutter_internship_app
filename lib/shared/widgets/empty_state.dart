@@ -13,20 +13,24 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDarkMode ? Colors.grey.shade600 : Colors.grey.shade400;
+    final textColor = isDarkMode ? Colors.grey.shade500 : Colors.grey.shade600;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 80, color: Colors.grey),
+            Icon(icon, size: 80, color: iconColor),
             const SizedBox(height: 16),
             Text(
               message,
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: textColor,
               ),
               textAlign: TextAlign.center,
             ),

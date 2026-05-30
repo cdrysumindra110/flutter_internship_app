@@ -28,54 +28,74 @@ class TodoScreen extends StatelessWidget {
             bloc.add(LoadTasks());
             return bloc;
           },
-          child: Builder(builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('To-Do List'),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => _showAddDialog(context),
-                child: const Icon(Icons.add),
-              ),
-              body: BlocBuilder<TodoBloc, TodoState>(
-                builder: (context, state) {
-                  if (state.tasks.isEmpty) {
-                    return const EmptyState(
-                      message: 'No tasks yet.\nTap + to add one!',
-                      icon: Icons.task_alt,
-                    );
-                  }
-                  return Column(
-                    children: [
-                      TaskStats(tasks: state.tasks),
-                      Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: 80),
-                          itemCount: state.tasks.length,
-                          itemBuilder: (context, index) {
-                            final task = state.tasks[index];
-                            return TaskCard(
-                              task: task,
-                              onToggle: () => context
-                                  .read<TodoBloc>()
-                                  .add(ToggleTaskCompletion(task.id)),
-                              onEdit: () => _showEditDialog(context, task),
-                              onDelete: () {
-                                context.read<TodoBloc>().add(DeleteTask(task.id));
-                              },
-                            );
-                          },
+          child: Builder(
+            builder: (context) {
+              return Scaffold(
+                appBar: AppBar(title: const Text('To-Do List')),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () => _showAddDialog(context),
+                  child: const Icon(Icons.add),
+                ),
+                body: BlocBuilder<TodoBloc, TodoState>(
+                  builder: (context, state) {
+                    if (state.tasks.isEmpty) {
+                      return const EmptyState(
+                        message: 'No tasks yet.\nTap + to add one!',
+                        icon: Icons.task_alt,
+                      );
+                    }
+                    return Column(
+                      children: [
+                        TaskStats(tasks: state.tasks),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(bottom: 80),
+                            itemCount: state.tasks.length,
+                            itemBuilder: (context, index) {
+                              final task = state.tasks[index];
+                              return TaskCard(
+                                task: task,
+                                onToggle: () => context.read<TodoBloc>().add(
+                                  ToggleTaskCompletion(task.id),
+                                ),
+                                onEdit: () => _showEditDialog(context, task),
+                                onDelete: () => _deleteTask(context, task.id),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            );
-          }),
+                      ],
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         );
       },
     );
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.green.shade700,
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      );
+  }
+
+  void _deleteTask(BuildContext context, String id) {
+    context.read<TodoBloc>().add(DeleteTask(id));
+    _showSnackBar(context, 'Task deleted successfully');
   }
 
   void _showAddDialog(BuildContext context) async {
@@ -84,11 +104,18 @@ class TodoScreen extends StatelessWidget {
       context: context,
       builder: (_) => const AddEditTaskDialog(),
     );
+
+    if (!context.mounted) return;
     if (result != null) {
-      bloc.add(AddTask(
-        title: result['title'],
-        category: result['category'],
-      ));
+      bloc.add(
+        AddTask(
+          title: result['title'],
+          category: result['category'],
+          description: result['description'],
+          dueDate: result['dueDate'],
+        ),
+      );
+      _showSnackBar(context, 'Task created successfully');
     }
   }
 
@@ -98,12 +125,24 @@ class TodoScreen extends StatelessWidget {
       context: context,
       builder: (_) => AddEditTaskDialog(task: task),
     );
-    if (result != null) {
-      bloc.add(EditTask(
+
+    if (!context.mounted) return;
+    if (result == null) return;
+    if (result['remove'] == true) {
+      bloc.add(DeleteTask(result['id'] as String));
+      _showSnackBar(context, 'Task deleted successfully');
+      return;
+    }
+
+    bloc.add(
+      EditTask(
         id: task.id,
         newTitle: result['title'],
         newCategory: result['category'],
-      ));
-    }
+        newDescription: result['description'],
+        newDueDate: result['dueDate'],
+      ),
+    );
+    _showSnackBar(context, 'Task updated successfully');
   }
 }

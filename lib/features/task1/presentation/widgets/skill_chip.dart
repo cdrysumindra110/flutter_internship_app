@@ -19,9 +19,7 @@ class SkillChip extends StatelessWidget {
         ),
       ),
       backgroundColor: AppTheme.primaryColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       side: BorderSide.none,
     );
   }

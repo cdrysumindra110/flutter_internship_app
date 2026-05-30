@@ -9,8 +9,9 @@ class PostService {
   PostService({http.Client? client}) : client = client ?? http.Client();
 
   Future<List<Post>> fetchPosts() async {
-    final response =
-        await client.get(Uri.parse('${AppConstants.baseUrl}${AppConstants.postsEndpoint}'));
+    final response = await client.get(
+      Uri.parse('${AppConstants.baseUrl}${AppConstants.postsEndpoint}'),
+    );
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((json) => Post.fromJson(json)).toList();

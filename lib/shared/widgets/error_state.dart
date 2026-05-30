@@ -5,28 +5,25 @@ class ErrorState extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
 
-  const ErrorState({
-    super.key,
-    required this.message,
-    required this.onRetry,
-  });
+  const ErrorState({super.key, required this.message, required this.onRetry});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final errorColor = isDarkMode ? Colors.red.shade400 : Colors.red.shade300;
+    final textColor = isDarkMode ? Colors.grey.shade400 : Colors.grey.shade700;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 80, color: Colors.red.shade300),
+            Icon(Icons.error_outline, size: 80, color: errorColor),
             const SizedBox(height: 16),
             Text(
               message,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey.shade700,
-              ),
+              style: GoogleFonts.poppins(fontSize: 16, color: textColor),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),

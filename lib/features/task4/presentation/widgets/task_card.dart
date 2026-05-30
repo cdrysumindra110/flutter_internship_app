@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/theme.dart';
 import '../../domain/models/todo_task.dart';
 
 class TaskCard extends StatelessWidget {
@@ -24,25 +23,36 @@ class TaskCard extends StatelessWidget {
         leading: Checkbox(
           value: task.isCompleted,
           onChanged: (_) => onToggle(),
-          activeColor: AppTheme.primaryColor,
+          activeColor: Theme.of(context).colorScheme.primary,
         ),
         title: Text(
           task.title,
           style: GoogleFonts.poppins(
-            decoration:
-                task.isCompleted ? TextDecoration.lineThrough : null,
-            color: task.isCompleted ? Colors.grey : null,
+            decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+            color: task.isCompleted
+                ? Colors.grey.shade500
+                : Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
           ),
         ),
         subtitle: Text(
           task.category.name.toUpperCase(),
-          style: GoogleFonts.poppins(fontSize: 11, color: Colors.grey),
+          style: GoogleFonts.poppins(
+            fontSize: 11,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.grey.shade500
+                : Colors.grey,
+          ),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.edit, color: AppTheme.primaryColor),
+              icon: Icon(
+                Icons.edit,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               onPressed: onEdit,
             ),
             IconButton(

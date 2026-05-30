@@ -6,7 +6,6 @@ import '../../domain/models/post.dart';
 part 'post_event.dart';
 part 'post_state.dart';
 
-
 class PostBloc extends Bloc<PostEvent, PostState> {
   final PostService postService;
   List<Post> _allPosts = [];
@@ -20,15 +19,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     emit(state.copyWith(status: PostStatus.loading));
     try {
       _allPosts = await postService.fetchPosts();
-      emit(state.copyWith(
-        status: PostStatus.loaded,
-        posts: _allPosts,
-      ));
+      emit(state.copyWith(status: PostStatus.loaded, posts: _allPosts));
     } catch (e) {
-      emit(state.copyWith(
-        status: PostStatus.error,
-        errorMessage: e.toString(),
-      ));
+      emit(
+        state.copyWith(status: PostStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 

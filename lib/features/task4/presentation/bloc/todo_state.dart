@@ -6,19 +6,10 @@ class TodoState extends Equatable {
   final TodoStatus status;
   final List<TodoTask> tasks;
 
-  const TodoState({
-    this.status = TodoStatus.initial,
-    this.tasks = const [],
-  });
+  const TodoState({this.status = TodoStatus.initial, this.tasks = const []});
 
-  TodoState copyWith({
-    TodoStatus? status,
-    List<TodoTask>? tasks,
-  }) {
-    return TodoState(
-      status: status ?? this.status,
-      tasks: tasks ?? this.tasks,
-    );
+  TodoState copyWith({TodoStatus? status, List<TodoTask>? tasks}) {
+    return TodoState(status: status ?? this.status, tasks: tasks ?? this.tasks);
   }
 
   @override

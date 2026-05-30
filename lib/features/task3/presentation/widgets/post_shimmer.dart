@@ -6,6 +6,12 @@ class PostShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDarkMode ? Colors.grey.shade800 : Colors.grey.shade300;
+    final highlightColor = isDarkMode
+        ? Colors.grey.shade700
+        : Colors.grey.shade100;
+
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -13,8 +19,8 @@ class PostShimmer extends StatelessWidget {
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
+          baseColor: baseColor,
+          highlightColor: highlightColor,
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(16),

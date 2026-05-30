@@ -19,7 +19,7 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch posts when screen opens
+
     context.read<PostBloc>().add(FetchPosts());
   }
 
@@ -32,12 +32,9 @@ class _PostsScreenState extends State<PostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Posts'),
-      ),
+      appBar: AppBar(title: const Text('Posts')),
       body: Column(
         children: [
-          // Search bar
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
             child: TextField(

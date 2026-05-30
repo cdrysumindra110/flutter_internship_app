@@ -6,8 +6,6 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(const AuthState()) {
-
-    // ================= LOGIN =================
     on<EmailChanged>((e, emit) {
       emit(state.copyWith(email: e.email, status: AuthStatus.initial));
     });
@@ -26,28 +24,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LoginSubmitted>(_login);
 
-    // ================= SIGNUP =================
     on<NameChanged>((e, emit) {
       emit(state.copyWith(name: e.name, status: AuthStatus.initial));
     });
 
     on<ConfirmPasswordChanged>((e, emit) {
-      emit(state.copyWith(
-        confirmPassword: e.value,
-        status: AuthStatus.initial,
-      ));
+      emit(
+        state.copyWith(confirmPassword: e.value, status: AuthStatus.initial),
+      );
     });
 
     on<ToggleConfirmPasswordVisibility>((e, emit) {
-      emit(state.copyWith(
-        obscureConfirmPassword: !state.obscureConfirmPassword,
-      ));
+      emit(
+        state.copyWith(obscureConfirmPassword: !state.obscureConfirmPassword),
+      );
     });
 
     on<SignupSubmitted>(_signup);
   }
 
-  // ================= LOGIN VALIDATION =================
   Future<void> _login(LoginSubmitted e, Emitter<AuthState> emit) async {
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
 
@@ -63,11 +58,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     if (emailError != null || passwordError != null) {
-      emit(state.copyWith(
-        status: AuthStatus.error,
-        emailError: emailError,
-        passwordError: passwordError,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.error,
+          emailError: emailError,
+          passwordError: passwordError,
+        ),
+      );
       return;
     }
 
@@ -76,7 +73,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(status: AuthStatus.success));
   }
 
-  // ================= SIGNUP VALIDATION =================
   Future<void> _signup(SignupSubmitted e, Emitter<AuthState> emit) async {
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
 
@@ -105,13 +101,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emailError != null ||
         passwordError != null ||
         confirmPasswordError != null) {
-      emit(state.copyWith(
-        status: AuthStatus.error,
-        nameError: nameError,
-        emailError: emailError,
-        passwordError: passwordError,
-        confirmPasswordError: confirmPasswordError,
-      ));
+      emit(
+        state.copyWith(
+          status: AuthStatus.error,
+          nameError: nameError,
+          emailError: emailError,
+          passwordError: passwordError,
+          confirmPasswordError: confirmPasswordError,
+        ),
+      );
       return;
     }
 

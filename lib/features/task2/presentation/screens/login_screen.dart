@@ -12,9 +12,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => AuthBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Login'),
-        ),
+        appBar: AppBar(title: const Text('Login')),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 60),
@@ -36,10 +34,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'Sign in to continue',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 48),
                 const LoginForm(),

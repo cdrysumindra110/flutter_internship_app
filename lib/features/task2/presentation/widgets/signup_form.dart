@@ -36,34 +36,28 @@ class SignupForm extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-
-              // ================= NAME =================
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Full Name',
                   prefixIcon: const Icon(Icons.person_outlined),
                   errorText: state.nameError,
                 ),
-                onChanged: (v) =>
-                    context.read<AuthBloc>().add(NameChanged(v)),
+                onChanged: (v) => context.read<AuthBloc>().add(NameChanged(v)),
               ),
 
               const SizedBox(height: 16),
 
-              // ================= EMAIL =================
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: const Icon(Icons.email_outlined),
                   errorText: state.emailError,
                 ),
-                onChanged: (v) =>
-                    context.read<AuthBloc>().add(EmailChanged(v)),
+                onChanged: (v) => context.read<AuthBloc>().add(EmailChanged(v)),
               ),
 
               const SizedBox(height: 16),
 
-              // ================= PASSWORD =================
               TextField(
                 obscureText: state.obscurePassword,
                 decoration: InputDecoration(
@@ -71,12 +65,14 @@ class SignupForm extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock_outlined),
                   errorText: state.passwordError,
                   suffixIcon: IconButton(
-                    icon: Icon(state.obscurePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                    onPressed: () => context
-                        .read<AuthBloc>()
-                        .add(TogglePasswordVisibility()),
+                    icon: Icon(
+                      state.obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () => context.read<AuthBloc>().add(
+                      TogglePasswordVisibility(),
+                    ),
                   ),
                 ),
                 onChanged: (v) =>
@@ -85,7 +81,6 @@ class SignupForm extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              // ================= CONFIRM PASSWORD =================
               TextField(
                 obscureText: state.obscureConfirmPassword,
                 decoration: InputDecoration(
@@ -93,22 +88,22 @@ class SignupForm extends StatelessWidget {
                   prefixIcon: const Icon(Icons.lock_outlined),
                   errorText: state.confirmPasswordError,
                   suffixIcon: IconButton(
-                    icon: Icon(state.obscureConfirmPassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                    onPressed: () => context
-                        .read<AuthBloc>()
-                        .add(ToggleConfirmPasswordVisibility()),
+                    icon: Icon(
+                      state.obscureConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () => context.read<AuthBloc>().add(
+                      ToggleConfirmPasswordVisibility(),
+                    ),
                   ),
                 ),
-                onChanged: (v) => context
-                    .read<AuthBloc>()
-                    .add(ConfirmPasswordChanged(v)),
+                onChanged: (v) =>
+                    context.read<AuthBloc>().add(ConfirmPasswordChanged(v)),
               ),
 
               const SizedBox(height: 24),
 
-              // ================= BUTTON =================
               LoadingButton(
                 label: 'Create Account',
                 isLoading: state.status == AuthStatus.loading,

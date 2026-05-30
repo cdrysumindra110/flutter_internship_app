@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/router.dart';
+import '../../../../core/cubit/theme_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,19 +13,16 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Internship Tasks'),
         actions: [
-          IconButton(
-            icon: Icon(
-              Theme.of(context).brightness == Brightness.light
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
-            ),
-            onPressed: () {
-              // Simple theme toggle using inherited theme (for demo)
-              // In a real app, you'd use a ThemeCubit.
-              // Here we just print or use a static switch.
-              // For completeness we'll add a TODO.
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Theme toggle coming soon')),
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, themeState) {
+              final isDarkMode =
+                  Theme.of(context).brightness == Brightness.dark;
+              return IconButton(
+                icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+                onPressed: () {
+                  context.read<ThemeCubit>().toggleTheme();
+                },
+                tooltip: isDarkMode ? 'Light Mode' : 'Dark Mode',
               );
             },
           ),

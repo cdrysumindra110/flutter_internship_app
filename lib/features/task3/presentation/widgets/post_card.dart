@@ -29,7 +29,9 @@ class PostCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                color: Colors.grey.shade600,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.grey.shade400
+                    : Colors.grey.shade600,
               ),
             ),
           ],

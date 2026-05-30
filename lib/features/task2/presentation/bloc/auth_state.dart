@@ -3,21 +3,17 @@ part of 'auth_bloc.dart';
 enum AuthStatus { initial, loading, success, error }
 
 class AuthState extends Equatable {
-  // ================= COMMON =================
   final AuthStatus status;
 
-  // ================= LOGIN =================
   final String email;
   final String password;
   final bool obscurePassword;
   final bool rememberMe;
 
-  // ================= SIGNUP =================
   final String name;
   final String confirmPassword;
   final bool obscureConfirmPassword;
 
-  // ================= FIELD ERRORS =================
   final String? nameError;
   final String? emailError;
   final String? passwordError;
@@ -80,17 +76,17 @@ class AuthState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        email,
-        password,
-        obscurePassword,
-        rememberMe,
-        name,
-        confirmPassword,
-        obscureConfirmPassword,
-        nameError,
-        emailError,
-        passwordError,
-        confirmPasswordError,
-      ];
+    status,
+    email,
+    password,
+    obscurePassword,
+    rememberMe,
+    name,
+    confirmPassword,
+    obscureConfirmPassword,
+    nameError,
+    emailError,
+    passwordError,
+    confirmPasswordError,
+  ];
 }

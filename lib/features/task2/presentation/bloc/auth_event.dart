@@ -7,7 +7,6 @@ abstract class AuthEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// ================= LOGIN =================
 class EmailChanged extends AuthEvent {
   final String email;
   const EmailChanged(this.email);
@@ -30,7 +29,6 @@ class ToggleRememberMe extends AuthEvent {}
 
 class LoginSubmitted extends AuthEvent {}
 
-// ================= SIGNUP =================
 class NameChanged extends AuthEvent {
   final String name;
   const NameChanged(this.name);
