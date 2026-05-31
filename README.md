@@ -144,7 +144,6 @@ lib/
 |------|---------|-------|-------|-------|
 | ![Home](assets/screenshots/home.png) | ![Profile](assets/screenshots/profile.png) | ![Login](assets/screenshots/login.png) | ![Posts](assets/screenshots/posts.png) | ![To-Do](assets/screenshots/todo.png) |
 
-> Replace the image links above with actual screenshots once they are available.
 
 ---
 
